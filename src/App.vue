@@ -38,10 +38,18 @@ let tableData = ref([{
   zip: 'CA 90036',
   tag: 'Office',
 },]);
+
+let multipleSelection = ref([])   //选中的行数据
 //方法
 
-const handleRowClick=()=>{
+const handleRowClick = () => {
   console.log('click')
+}
+
+//多选事件方法
+const handleSelectionChange = (val) => {
+  multipleSelection.value = val;
+  console.log(val);
 }
 
 </script>
@@ -55,13 +63,15 @@ const handleRowClick=()=>{
 
     <div class="query-box">
 
-      <el-input v-model="queryInput" placeholder="请输入搜索" />
+      <el-input v-model="queryInput" placeholder="请输入搜索" width="200px" />
       <el-button type="primary">增加</el-button>
 
     </div>
 
     <div class="table">
-      <el-table :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100% " ref="multipleTableRef" @selection-change="handleSelectionChange"
+        border>
+        <el-table-column type="selection" width="55" />
         <el-table-column fixed prop="date" label="Date" width="150" />
         <el-table-column prop="name" label="Name" width="120" />
         <el-table-column prop="state" label="State" width="120" />
@@ -81,10 +91,23 @@ const handleRowClick=()=>{
 </template>
 
 <style scoped>
-.table-box{
+.table-box {
   width: 800px;
   position: relative;
   left: 20%;
   /* right: 50%; */
 }
+
+.title {
+  text-align: center;
+}
+
+.query-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .el-Input{
+  width: 200jpx;
+} */
 </style>
